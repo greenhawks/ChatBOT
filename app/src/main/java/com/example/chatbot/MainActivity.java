@@ -44,13 +44,16 @@ public class MainActivity extends AppCompatActivity {
                     recyclerView.scrollToPosition(messages.size()-1);
 
                     Question.setText("");
+                    Question.requestFocus();
 
                     NetworkThread nt = new NetworkThread(getApplicationContext(), question,response->{
                         messages.add(new Message(response,"bot"));
                         adapter.notifyItemInserted(messages.size()-1);
                         recyclerView.scrollToPosition(messages.size()-1);
+                        System.out.println(messages);
                     });
                     nt.execute();
+
                 }
             }
         });

@@ -50,8 +50,14 @@ public class NetworkThread extends AsyncTask<String,String,String> {
                 listenableFuture, new FutureCallback<GenerateContentResponse>() {
                     @Override
                     public void onSuccess(GenerateContentResponse result) {
-                         Return = result.getText().toString();
-
+                         String response = result.getText().toString();
+                         if(!response.isEmpty()) {
+                             new Handler(Looper.getMainLooper()).post(() ->
+                                     {
+                                         network.OnResponse(response);
+                                     }
+                             );
+                         }
                     }
 
                     @Override
@@ -74,6 +80,7 @@ public class NetworkThread extends AsyncTask<String,String,String> {
     protected void onPostExecute(String string)
     {
         super.onPostExecute(string);
+
         
     }
 }
